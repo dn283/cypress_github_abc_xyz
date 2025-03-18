@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Cypress Test Report</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Reports</title>
     <style>
-      body { font-family: Arial, sans-serif; text-align: center; }
-      h1 { color: #333; }
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin: 20px;
+      }
+      h1 {
+        color: #333;
+        margin: 20px 0;
+      }
       .report-button {
         display: block;
         width: 200px;
@@ -16,32 +25,17 @@
         text-decoration: none;
         border-radius: 5px;
       }
-      .report-button:hover { background-color: #0056b3; }
+      .report-button:hover {
+        background-color: #0056b3;
+      }
     </style>
   </head>
   <body>
-    <h1>Cypress Test Reports</h1>
-    <p>Click on a button below to view the corresponding test report.</p>
-    <div id='report-buttons'></div>
-    <script>
-      const reportFolders = [
-{"team": "xyz", "runID": "20250318-202123"}
-,{"team": "xyz", "runID": "20250318-201443"}
-,{"team": "abc", "runID": "20250318-202255"}
-];
-
-      function generateReportButtons() {
-        const reportButtonsContainer = document.getElementById('report-buttons');
-        reportFolders.forEach((entry) => {
-          const button = document.createElement('a');
-          button.href = './' + entry.team + '/' + entry.runID + '/';
-          button.className = 'report-button';
-          button.textContent = entry.team + ' - ' + entry.runID;
-          reportButtonsContainer.appendChild(button);
-        });
-      }
-
-      generateReportButtons();
-    </script>
+    <h1>Test Reports</h1>
+    <p>Click on a report below to view the corresponding test results.</p>
+    <div id="report-buttons">
+      <a href="gh-pages/abc" class="report-button">ABC Team Report</a>
+      <a href="gh-pages/xyz" class="report-button">XYZ Team Report</a>
+    </div>
   </body>
 </html>
