@@ -1,0 +1,16 @@
+name: Cypress Tests for ABC
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  abc-tests:
+    uses: ./.github/workflows/cypress-main.yml
+    with:
+      spec_file: "abc_practice-login.cy.js"
+      team: "abc"

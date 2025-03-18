@@ -1,0 +1,16 @@
+name: Cypress Tests for XYZ
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  xyz-tests:
+    uses: ./.github/workflows/cypress-main.yml
+    with:
+      spec_file: "xyz_practice-login.cy.js"
+      team: "xyz"

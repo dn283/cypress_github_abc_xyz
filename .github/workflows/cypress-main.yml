@@ -1,0 +1,119 @@
+name: Cypress Main Workflow
+
+on:
+  workflow_call:
+    inputs:
+      spec_file:
+        required: true
+        type: string
+      team:
+        required: true
+        type: string
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate RunID
+        id: runid
+        run: echo "runID=$(date +'%Y%m%d-%H%M%S')" >> $GITHUB_ENV
+
+      - name: Run Cypress tests for ${{ inputs.team }}
+        continue-on-error: true
+        run: npx cypress run --spec "cypress/e2e/${{ inputs.spec_file }}"
+
+      - name: Setup GitHub Pages directory
+        run: |
+          mkdir -p gh-pages
+          cd gh-pages
+          git init
+          git remote add origin https://github.com/${{ github.repository }}.git
+          git fetch origin gh-pages --depth=1
+          git checkout gh-pages || echo "No gh-pages branch yet"
+          cd ..
+
+      - name: Prepare report for GitHub Pages
+        run: |
+          mkdir -p gh-pages/${{ inputs.team }}
+          mkdir -p gh-pages/${{ inputs.team }}/${{ env.runID }}
+          cp -r cypress/reports/html/* gh-pages/${{ inputs.team }}/${{ env.runID }}/
+
+      - name: Update index.html with buttons
+        run: |
+          echo "<!DOCTYPE html>
+          <html>
+            <head>
+              <title>Cypress Test Report</title>
+              <style>
+                body { font-family: Arial, sans-serif; text-align: center; }
+                h1 { color: #333; }
+                .report-button {
+                  display: block;
+                  width: 200px;
+                  padding: 10px;
+                  margin: 10px auto;
+                  text-align: center;
+                  background-color: #007bff;
+                  color: white;
+                  text-decoration: none;
+                  border-radius: 5px;
+                }
+                .report-button:hover { background-color: #0056b3; }
+              </style>
+            </head>
+            <body>
+              <h1>Cypress Test Reports</h1>
+              <p>Click on a button below to view the corresponding test report.</p>
+              <div id='report-buttons'></div>
+              <script>
+                const reportFolders = [" > gh-pages/index.html
+
+          first=true
+          for dir in $(ls -d gh-pages/*/*/ | sort -r); do
+            if [ -d "$dir" ]; then
+              runID=$(basename "$dir")
+              team=$(basename $(dirname "$dir"))
+              if [ "$first" = true ]; then
+                echo "{\"team\": \"$team\", \"runID\": \"$runID\"}" >> gh-pages/index.html
+                first=false
+              else
+                echo ",{\"team\": \"$team\", \"runID\": \"$runID\"}" >> gh-pages/index.html
+              fi
+            fi
+          done
+
+          echo "];
+
+                function generateReportButtons() {
+                  const reportButtonsContainer = document.getElementById('report-buttons');
+                  reportFolders.forEach((entry) => {
+                    const button = document.createElement('a');
+                    button.href = './' + entry.team + '/' + entry.runID + '/';
+                    button.className = 'report-button';
+                    button.textContent = entry.team + ' - ' + entry.runID;
+                    reportButtonsContainer.appendChild(button);
+                  });
+                }
+
+                generateReportButtons();
+              </script>
+            </body>
+          </html>" >> gh-pages/index.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: gh-pages
+          keep_files: true
