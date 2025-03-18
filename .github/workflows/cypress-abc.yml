@@ -1,12 +1,13 @@
 name: Cypress Tests for ABC
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+
+  workflow_dispatch:
+    inputs:
+      trigger:  # Optional input to provide custom message for triggering
+        description: 'Trigger ABC Tests'
+        required: true
+        default: 'yes'
 
 jobs:
   abc-tests:

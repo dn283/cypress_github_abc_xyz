@@ -1,12 +1,13 @@
 name: Cypress Tests for XYZ
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+
+  workflow_dispatch:
+    inputs:
+      trigger:  # Optional input to provide custom message for triggering
+        description: 'Trigger xyz Tests'
+        required: true
+        default: 'yes'
 
 jobs:
   xyz-tests:
