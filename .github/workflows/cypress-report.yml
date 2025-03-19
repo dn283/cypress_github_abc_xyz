@@ -23,6 +23,9 @@ jobs:
           name: cypress-reports
           path: cypress/reports/html
 
+      - name: List Downloaded Cypress Reports
+        run: ls -R cypress/reports/html
+
       - name: Setup GitHub Pages directory
         run: |
           mkdir -p gh-pages

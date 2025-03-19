@@ -38,6 +38,9 @@ jobs:
         continue-on-error: true
         run: npx cypress run --spec "cypress/e2e/${{ inputs.spec_file }}"
 
+      - name: List Cypress Reports
+        run: ls -R cypress/reports/html
+
       - name: Upload Cypress Reports
         uses: actions/upload-artifact@v4
         with:
