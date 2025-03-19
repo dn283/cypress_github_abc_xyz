@@ -39,26 +39,33 @@
         gap: 20px;
       }
       .report-card {
-        width: 250px;
-        height: 80px;
+        width: 280px;
+        height: 100px;
         background: white;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         border-radius: 8px;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         font-size: 16px;
         font-weight: bold;
         transition: 0.3s;
         text-decoration: none;
-        color: black;
-        background-color: #28a745;
         color: white;
+        background-color: #28a745;
+        border-left: 5px solid #155724;
+        padding: 10px;
       }
       .report-card:hover {
         transform: scale(1.05);
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
         background-color: #218838;
+      }
+      .timestamp {
+        font-size: 14px;
+        color: #666;
+        margin-top: 4px;
       }
       .back-btn {
         display: inline-block;
@@ -76,14 +83,33 @@
   </head>
   <body>
     <div class='container'>
-      <h1>📊 XYZ Test Reports</h1>
+      <h1>🦸 XYZ Test Reports</h1>
       <h2>Select a test run to view the report:</h2>
       <div class='reports'>
-<a href='./20250319-013730/' class='report-card'>📝 Report - 20250319-013730</a>
-<a href='./20250319-011239/' class='report-card'>📝 Report - 20250319-011239</a>
-<a href='./20250318-231207/' class='report-card'>📝 Report - 20250318-231207</a>
-<a href='./20250318-202123/' class='report-card'>📝 Report - 20250318-202123</a>
-<a href='./20250318-201443/' class='report-card'>📝 Report - 20250318-201443</a>
+<a href='./20250319-025102/' class='report-card'>
+          📝 Run ID: 20250319-025102
+          <div class='timestamp'>2025-03-19 | 02:51 AM EST | 02:51 AM IST</div>
+        </a>
+<a href='./20250319-013730/' class='report-card'>
+          📝 Run ID: 20250319-013730
+          <div class='timestamp'>2025-03-19 | 01:37 AM EST | 01:37 AM IST</div>
+        </a>
+<a href='./20250319-011239/' class='report-card'>
+          📝 Run ID: 20250319-011239
+          <div class='timestamp'>2025-03-19 | 01:12 AM EST | 01:12 AM IST</div>
+        </a>
+<a href='./20250318-231207/' class='report-card'>
+          📝 Run ID: 20250318-231207
+          <div class='timestamp'>2025-03-18 | 11:12 PM EST | 11:12 PM IST</div>
+        </a>
+<a href='./20250318-202123/' class='report-card'>
+          📝 Run ID: 20250318-202123
+          <div class='timestamp'>2025-03-18 | 08:21 PM EST | 08:21 PM IST</div>
+        </a>
+<a href='./20250318-201443/' class='report-card'>
+          📝 Run ID: 20250318-201443
+          <div class='timestamp'>2025-03-18 | 08:14 PM EST | 08:14 PM IST</div>
+        </a>
 </div>
       <a href='../' class='back-btn'>⬅️ Back to Teams</a>
     </div>
