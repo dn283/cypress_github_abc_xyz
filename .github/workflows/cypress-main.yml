@@ -144,8 +144,8 @@ jobs:
           </body>
           </html>" > gh-pages/index.html
 
-          - name: Generate Team Report Page
-          run: |
+      - name: Generate Team Report Page
+        run: |
             for team in abc xyz; do
             echo "<!DOCTYPE html>
             <html>
