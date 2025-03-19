@@ -212,9 +212,9 @@ jobs:
                   background-color: #218838;
                 }
                 .timestamp {
-                white-space: nowrap;
-                overflow: hidden;
-                  text-overflow: ellipsis; /* Optionally, use ellipsis if the text is too long */
+                  font-size: 14px;
+                  color: #666;
+                  margin-top: 4px;
                 }
                 .back-btn {
                   display: inline-block;
@@ -252,15 +252,13 @@ jobs:
 
           # Convert runID datetime to UTC, EST, and IST
           UTC_TIME=$(date -u -d "$datetime" +'%H:%M:%S UTC')
-          EST_DATE=$(TZ="America/New_York" date -d "$datetime" +'%B %d, %Y')
           EST_TIME=$(TZ="America/New_York" date -d "$datetime" +'%I:%M %p EST')
-          IST_DATE=$(TZ="Asia/Kolkata" date -d "$datetime" +'%B %d, %Y')
           IST_TIME=$(TZ="Asia/Kolkata" date -d "$datetime" +'%I:%M %p IST')
 
           # Adding report link for each runID
           echo "<a href='./$runID/' class='report-card'>
                   📝 Run ID: $runID
-                  <div class= | $IST_DATE | $IST_TIME | $EST_DATE | $EST_TIME</div>
+                  <div class='timestamp'>$readableDate | $estTime | $istTime</div>
                 </a>" >> gh-pages/${team}/index.html
           done
 
