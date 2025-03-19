@@ -254,15 +254,19 @@ jobs:
           echo "Processing runID: $runID"
           echo "Datetime string extracted from runID: $datetime"
 
-          # Convert the datetime to UTC, EST, and IST based on the extracted time
+          # Convert runID datetime to UTC, EST, and IST
           UTC_TIME=$(date -u -d "$datetime" +'%H:%M:%S UTC')
-          echo "UTC Time: $UTC_TIME"  # Debug: Print UTC time
+          echo "UTC Time: $UTC_TIME"
 
-          EST_TIME=$(TZ="America/New_York" date -d "$datetime" +'%I:%M %p EST')
-          echo "EST Time: $EST_TIME"  # Debug: Print EST time
-          
-          IST_TIME=$(TZ="Asia/Kolkata" date -d "$datetime" +'%I:%M %p IST')
-          echo "IST Time: $IST_TIME"  # Debug: Print IST time
+          # Handle EST/EDT conversion with TZ correctly
+          export TZ="America/New_York"
+          EST_TIME=$(date -d "$datetime" +'%I:%M %p %Z')
+          echo "EST/EDT Time: $EST_TIME"
+
+          # Handle IST conversion with TZ correctly
+          export TZ="Asia/Kolkata"
+          IST_TIME=$(date -d "$datetime" +'%I:%M %p %Z')
+          echo "IST Time: $IST_TIME"
 
           # Generate the readable date dynamically for each report (like March 18, 2025)
           readableDate=$(date -u -d "$datetime" +'%B %d, %Y')  # Format: "March 18, 2025"
