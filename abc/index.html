@@ -1,28 +1,90 @@
 <!DOCTYPE html>
   <html>
   <head>
-    <title>Abc Test Reports</title>
+    <title>ABC Test Reports</title>
     <style>
-      body { font-family: Arial, sans-serif; text-align: center; }
-      h1 { color: #333; }
-      .report-button {
-        display: block;
-        width: 200px;
-        padding: 10px;
-        margin: 10px auto;
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+      body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f4f4f9;
         text-align: center;
-        background-color: #007bff;
-        color: white;
-        text-decoration: none;
-        border-radius: 5px;
+        margin: 0;
+        padding: 0;
       }
-      .report-button:hover { background-color: #0056b3; }
+      h1 {
+        font-size: 36px;
+        font-weight: 600;
+        color: #222;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        background: linear-gradient(45deg, #17a2b8, #007bff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-top: 20px;
+      }
+      h2 {
+        font-size: 20px;
+        color: #555;
+        font-weight: 400;
+        opacity: 0.8;
+      }
+      .container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 20px;
+      }
+      .reports {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+      .report-card {
+        width: 250px;
+        height: 80px;
+        background: white;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: bold;
+        transition: 0.3s;
+        text-decoration: none;
+        color: black;
+        background-color: #28a745;
+        color: white;
+      }
+      .report-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        background-color: #218838;
+      }
+      .back-btn {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 14px;
+        text-decoration: none;
+        color: white;
+        background: #007bff;
+        border-radius: 5px;
+        transition: 0.3s;
+      }
+      .back-btn:hover { background: #0056b3; }
     </style>
   </head>
   <body>
-    <h1>Abc Test Reports</h1>
-    <p>Select a test run:</p>
-<a href='./20250319-011024/' class='report-button'>Run ID: 20250319-011024</a>
-<a href='./20250318-231314/' class='report-button'>Run ID: 20250318-231314</a>
-<a href='./20250318-202255/' class='report-button'>Run ID: 20250318-202255</a>
-</body></html>
+    <div class='container'>
+      <h1>📊 ABC Test Reports</h1>
+      <h2>Select a test run to view the report:</h2>
+      <div class='reports'>
+<a href='./20250319-013532/' class='report-card'>📝 Report - 20250319-013532</a>
+<a href='./20250319-011024/' class='report-card'>📝 Report - 20250319-011024</a>
+<a href='./20250318-231314/' class='report-card'>📝 Report - 20250318-231314</a>
+<a href='./20250318-202255/' class='report-card'>📝 Report - 20250318-202255</a>
+</div>
+      <a href='../' class='back-btn'>⬅️ Back to Teams</a>
+    </div>
+  </body>
+  </html>
