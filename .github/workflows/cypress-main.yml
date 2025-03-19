@@ -36,8 +36,8 @@ jobs:
 
       - name: Run Cypress tests for ${{ inputs.team }}
         continue-on-error: true
-        run: npx cypress run 
-
+        run: npx cypress run --spec "${{ inputs.spec_file }}"
+        
       - name: Ensure correct report index.html
         run: |
           REPORTS_DIR="cypress/reports/html"
