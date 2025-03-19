@@ -36,9 +36,25 @@ jobs:
 
       - name: Run Cypress tests for ${{ inputs.team }}
         continue-on-error: true
-        run: npx cypress run --spec "cypress/e2e/${{ inputs.spec_file }}"
+        run: npx cypress run --spec "${{ inputs.spec_file }}"
 
-      
+      - name: Ensure correct report index.html
+        run: |
+          REPORTS_DIR="cypress/reports/html"
+          
+          # Remove the first generated index.html if there are multiple reports
+          if [[ $(ls $REPORTS_DIR/index*.html 2>/dev/null | wc -l) -gt 1 ]]; then
+            rm -f "$REPORTS_DIR/index.html"
+          fi
+          
+          # Find the latest index file and rename it to index.html
+          LAST_INDEX=$(ls -v $REPORTS_DIR/index_*.html | tail -n 1)
+          if [[ -n "$LAST_INDEX" ]]; then
+            mv "$LAST_INDEX" "$REPORTS_DIR/index.html"
+          fi
+          
+          # Debugging output
+          echo "Final report file: $(ls -lah $REPORTS_DIR/index.html)"
 
       - name: Setup GitHub Pages directory
         run: |
