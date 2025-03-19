@@ -38,6 +38,12 @@ jobs:
         continue-on-error: true
         run: npx cypress run --spec "cypress/e2e/${{ inputs.spec_file }}"
 
+      - name: Upload Cypress Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: cypress-reports
+          path: cypress/reports/html
+
       - name: Trigger Report Generation
         uses: actions/github-script@v6
         with:
@@ -48,7 +54,6 @@ jobs:
               workflow_id: 'cypress-report.yml',
               ref: context.ref,
               inputs: {
-                team: context.payload.inputs.team,
                 runID: process.env.runID
               }
             });

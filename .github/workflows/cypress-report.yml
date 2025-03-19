@@ -3,7 +3,6 @@ name: Cypress Report Generation
 on:
   workflow_dispatch:
     inputs:
-      
       runID:
         required: true
         type: string
@@ -14,6 +13,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Download Cypress Reports
+        uses: actions/download-artifact@v3
+        with:
+          name: cypress-reports
+          path: cypress/reports/html
 
       - name: Setup GitHub Pages directory
         run: |
@@ -27,8 +32,8 @@ jobs:
 
       - name: Prepare report for GitHub Pages
         run: |
-          mkdir -p gh-pages/${{ github.event.inputs.team }}/${{ github.event.inputs.runID }}
-          cp -r cypress/reports/html/* gh-pages/${{ github.event.inputs.team }}/${{ github.event.inputs.runID }}/
+          mkdir -p gh-pages/${{ github.event.inputs.runID }}
+          cp -r cypress/reports/html/* gh-pages/${{ github.event.inputs.runID }}/
 
       - name: Generate Main Index Page
         run: |
