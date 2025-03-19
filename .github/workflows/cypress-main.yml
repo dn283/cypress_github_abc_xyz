@@ -1,7 +1,7 @@
-name: Cypress Main Workflow
+name: Cypress Main Workflow 
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       spec_file:
         required: true
@@ -11,7 +11,7 @@ on:
         type: string
 
 jobs:
-  cypress-run-and-report:
+  cypress-run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -38,7 +38,6 @@ jobs:
         continue-on-error: true
         run: npx cypress run --spec "cypress/e2e/${{ inputs.spec_file }}"
 
-
       - name: Setup GitHub Pages directory
         run: |
           mkdir -p gh-pages
@@ -54,7 +53,7 @@ jobs:
           mkdir -p gh-pages/${{ inputs.team }}/${{ env.runID }}
           cp -r cypress/reports/html/* gh-pages/${{ inputs.team }}/${{ env.runID }}/
 
-      
+
 
       - name: Generate Team Report Page
         run: |
