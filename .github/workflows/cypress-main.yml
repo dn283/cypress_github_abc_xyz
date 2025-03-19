@@ -235,39 +235,43 @@ jobs:
                   <h1>🦸 ${team^^} Test Reports</h1>
                   <h2>Select a test run to view the report:</h2>
                   <div class='reports'>" > gh-pages/${team}/index.html
-        
+
             for dir in $(ls -d gh-pages/${team}/*/ | sort -r); do
               runID=$(basename "$dir")
               
-              # Convert runID to the previous format (YYYYMMDD-HHMMSS)
-              formattedRunID=$(echo "$runID" | sed 's/_/-/g' | sed 's/-/:/g')
-              readableDate=$(echo "$formattedRunID" | cut -c1-19)
+              # Extract the date and time parts from the runID (e.g., 20250319-023733)
+              year=${runID:0:4}
+              month=${runID:4:2}
+              day=${runID:6:2}
+              hour=${runID:9:2}
+              minute=${runID:11:2}
+              second=${runID:13:2}
               
-              # Parse time from the formatted runID for UTC, EST, and IST
-              UTC_TIME=$(date -u -d "${formattedRunID:0:4}-${formattedRunID:5:2}-${formattedRunID:8:2} ${formattedRunID:11:2}:${formattedRunID:14:2}:${formattedRunID:17:2}" +'%H:%M:%S UTC')
-              EST_TIME=$(TZ="America/New_York" date -d "${formattedRunID:0:4}-${formattedRunID:5:2}-${formattedRunID:8:2} ${formattedRunID:11:2}:${formattedRunID:14:2}:${formattedRunID:17:2}" +'%I:%M %p EST')
-              IST_TIME=$(TZ="Asia/Kolkata" date -d "${formattedRunID:0:4}-${formattedRunID:5:2}-${formattedRunID:8:2} ${formattedRunID:11:2}:${formattedRunID:14:2}:${formattedRunID:17:2}" +'%I:%M %p IST')
-        
+              # Construct the datetime string in a format that date can parse
+              datetime="${year}-${month}-${day} ${hour}:${minute}:${second}"
+
+              # Convert runID datetime to UTC, EST, and IST
+              UTC_TIME=$(date -u -d "$datetime" +'%H:%M:%S UTC')
+              EST_TIME=$(TZ="America/New_York" date -d "$datetime" +'%I:%M %p EST')
+              IST_TIME=$(TZ="Asia/Kolkata" date -d "$datetime" +'%I:%M %p IST')
+
               # Adding report link for each runID
               echo "<a href='./$runID/' class='report-card'>
                       📝 Run ID: $runID
-                      <div class='timestamp'>$readableDate | $EST_TIME | $IST_TIME</div>
+                      <div class='timestamp'>$year-$month-$day | $EST_TIME | $IST_TIME</div>
                     </a>" >> gh-pages/${team}/index.html
             done
-        
+
             echo "</div>
                   <a href='../' class='back-btn'>⬅️ Back to Teams</a>
                 </div>
               </body>
               </html>" >> gh-pages/${team}/index.html
             done
-        
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: gh-pages
           keep_files: true
-
-
-          
