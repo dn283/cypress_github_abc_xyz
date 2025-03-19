@@ -17,15 +17,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: List Downloaded Cypress Reports
+        run: ls -R cypress/reports/html
+
+
       - name: Download Cypress Reports
         uses: actions/download-artifact@v4
         with:
           name: cypress-reports
           path: cypress/reports/html
 
-      - name: List Downloaded Cypress Reports
-        run: ls -R cypress/reports/html
-
+      
       - name: Setup GitHub Pages directory
         run: |
           mkdir -p gh-pages
