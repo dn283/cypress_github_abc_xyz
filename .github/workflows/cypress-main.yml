@@ -28,9 +28,10 @@ jobs:
       - name: Generate Readable RunID
         id: runid
         run: |
-          SAFE_RUNID=$(date -u +'%Y-%m-%d_%H-%M-%S')  # Safe for URLs
-          READABLE_DATE=$(date -u +'%B %d, %Y')  # "March 18, 2025"
-          UTC_TIME=$(date -u +'%H:%M:%S UTC')    # "14:05:22 UTC"
+          # Generate RunID in the desired format (YYYYMMDD-HHMMSS)
+          SAFE_RUNID=$(date -u +'%Y%m%d-%H%M%S')  # Format without dashes and underscores
+          READABLE_DATE=$(date -u +'%B %d, %Y')   # "March 18, 2025"
+          UTC_TIME=$(date -u +'%H:%M:%S UTC')     # "14:05:22 UTC"
           EST_TIME=$(TZ="America/New_York" date +'%I:%M %p EST')  # "09:35 AM EST"
           IST_TIME=$(TZ="Asia/Kolkata" date +'%I:%M %p IST')  # "08:05 PM IST"
           echo "runID=$SAFE_RUNID" >> $GITHUB_ENV
