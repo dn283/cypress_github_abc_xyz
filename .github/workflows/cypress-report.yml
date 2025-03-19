@@ -3,9 +3,7 @@ name: Cypress Report Generation
 on:
   workflow_dispatch:
     inputs:
-      team:
-        required: true
-        type: string
+      
       runID:
         required: true
         type: string
