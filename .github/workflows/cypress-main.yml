@@ -247,23 +247,33 @@ jobs:
           minute=${runID:11:2}
           second=${runID:13:2}
           
-          # Construct the datetime string in a format that date can parse
+          # Construct the datetime string from runID (e.g., 20250319-023733 => 2025-03-19 02:37:33)
           datetime="${year}-${month}-${day} ${hour}:${minute}:${second}"
 
-          # Convert runID datetime to UTC, EST, and IST
-          UTC_TIME=$(date -u -d "$datetime" +'%H:%M:%S UTC')
-          EST_TIME=$(TZ="America/New_York" date -d "$datetime" +'%I:%M %p EST')
-          IST_TIME=$(TZ="Asia/Kolkata" date -d "$datetime" +'%I:%M %p IST')
+          # Debugging: Print the datetime being processed
+          echo "Processing runID: $runID"
+          echo "Datetime string extracted from runID: $datetime"
 
-          # Generate the readable date dynamically for each report
+          # Convert the datetime to UTC, EST, and IST based on the extracted time
+          UTC_TIME=$(date -u -d "$datetime" +'%H:%M:%S UTC')
+          echo "UTC Time: $UTC_TIME"  # Debug: Print UTC time
+
+          EST_TIME=$(TZ="America/New_York" date -d "$datetime" +'%I:%M %p EST')
+          echo "EST Time: $EST_TIME"  # Debug: Print EST time
+          
+          IST_TIME=$(TZ="Asia/Kolkata" date -d "$datetime" +'%I:%M %p IST')
+          echo "IST Time: $IST_TIME"  # Debug: Print IST time
+
+          # Generate the readable date dynamically for each report (like March 18, 2025)
           readableDate=$(date -u -d "$datetime" +'%B %d, %Y')  # Format: "March 18, 2025"
 
-          # Adding report link for each runID with correct time variable references
+          # Adding report link for each runID with corrected times
           echo "<a href='./$runID/' class='report-card'>
                   📝 Run ID: $runID
-                  <div class='timestamp'>$readableDate | $estTime | $istTime </div>
+                  <div class='timestamp'>$readableDate | $EST_TIME | $IST_TIME</div>
                 </a>" >> gh-pages/${team}/index.html
           done
+
 
           echo "</div>
                 <a href='../' class='back-btn'>⬅️ Back to Teams</a>
