@@ -15,5 +15,5 @@ jobs:
   abc-tests:
     uses: ./.github/workflows/cypress-main.yml
     with:
-      spec_file: "abc_practice-login.cy.js"
+      spec_file: "cypress/e2e/*.cy.js"
       team: "abc"
