@@ -1,15 +1,18 @@
 name: Cypress Report Generation
 
 on:
-  workflow_run:
-    workflows: ["Cypress Main Workflow"]
-    types:
-      - completed
+  workflow_dispatch:
+    inputs:
+      team:
+        required: true
+        type: string
+      runID:
+        required: true
+        type: string
 
 jobs:
   generate-report:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
