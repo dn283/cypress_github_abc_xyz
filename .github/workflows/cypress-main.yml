@@ -54,6 +54,7 @@ jobs:
               workflow_id: 'cypress-report.yml',
               ref: context.ref,
               inputs: {
+                team: "${{ inputs.team }}",
                 runID: process.env.runID
               }
             });

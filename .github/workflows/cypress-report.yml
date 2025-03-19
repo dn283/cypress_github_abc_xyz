@@ -3,6 +3,9 @@ name: Cypress Report Generation
 on:
   workflow_dispatch:
     inputs:
+      team:
+        required: true
+        type: string
       runID:
         required: true
         type: string
@@ -32,8 +35,8 @@ jobs:
 
       - name: Prepare report for GitHub Pages
         run: |
-          mkdir -p gh-pages/${{ github.event.inputs.runID }}
-          cp -r cypress/reports/html/* gh-pages/${{ github.event.inputs.runID }}/
+          mkdir -p gh-pages/${{ github.event.inputs.team }}/${{ github.event.inputs.runID }}
+          cp -r cypress/reports/html/* gh-pages/${{ github.event.inputs.team }}/${{ github.event.inputs.runID }}/
 
       - name: Generate Main Index Page
         run: |
