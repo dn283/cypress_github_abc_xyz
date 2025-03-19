@@ -258,7 +258,7 @@ jobs:
           # Adding report link for each runID
           echo "<a href='./$runID/' class='report-card'>
                   📝 Run ID: $runID
-                  <div class='timestamp'>$readableDate | $env.estTime | $env.istTime</div>
+                  <div class='timestamp'>$readableDate | $estTime | $istTime</div>
                 </a>" >> gh-pages/${team}/index.html
           done
 
