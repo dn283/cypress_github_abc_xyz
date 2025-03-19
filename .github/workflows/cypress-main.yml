@@ -45,16 +45,48 @@ jobs:
 
       - name: Prepare report for GitHub Pages
         run: |
-          mkdir -p gh-pages/${{ inputs.team }}
           mkdir -p gh-pages/${{ inputs.team }}/${{ env.runID }}
           cp -r cypress/reports/html/* gh-pages/${{ inputs.team }}/${{ env.runID }}/
 
-      - name: Update index.html with buttons
+      - name: Generate Main Index Page
         run: |
           echo "<!DOCTYPE html>
           <html>
+          <head>
+            <title>Cypress Test Reports</title>
+            <style>
+              body { font-family: Arial, sans-serif; text-align: center; }
+              h1 { color: #333; }
+              .report-button {
+                display: block;
+                width: 200px;
+                padding: 10px;
+                margin: 10px auto;
+                text-align: center;
+                background-color: #007bff;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+              }
+              .report-button:hover { background-color: #0056b3; }
+            </style>
+          </head>
+          <body>
+            <h1>Cypress Test Reports</h1>
+            <p>Select a team to view reports:</p>
+            <a href='./abc/' class='report-button'>Team ABC</a>
+            <a href='./xyz/' class='report-button'>Team XYZ</a>
+          </body>
+          </html>" > gh-pages/index.html
+
+      - name: Generate Team Index Pages
+        run: |
+          for team in abc xyz; do
+            mkdir -p gh-pages/$team
+            echo "<!DOCTYPE html>
+            <html>
             <head>
-              <title>Cypress Test Report</title>
+              <title>${team^} Test Reports</title>
               <style>
                 body { font-family: Arial, sans-serif; text-align: center; }
                 h1 { color: #333; }
@@ -73,44 +105,16 @@ jobs:
               </style>
             </head>
             <body>
-              <h1>Cypress Test Reports</h1>
-              <p>Click on a button below to view the corresponding test report.</p>
-              <div id='report-buttons'></div>
-              <script>
-                const reportFolders = [
-                " > gh-pages/index.html
+              <h1>${team^} Test Reports</h1>
+              <p>Select a test run:</p>" > gh-pages/$team/index.html
 
-          first=true
-          for dir in $(ls -d gh-pages/*/*/ | sort -r); do
-            if [ -d "$dir" ]; then
+            for dir in $(ls -d gh-pages/$team/*/ 2>/dev/null | sort -r); do
               runID=$(basename "$dir")
-              team=$(basename $(dirname "$dir"))
-              if [ "$first" = true ]; then
-                echo "{\"team\": \"$team\", \"runID\": \"$runID\"}" >> gh-pages/index.html
-                first=false
-              else
-                echo ",{\"team\": \"$team\", \"runID\": \"$runID\"}" >> gh-pages/index.html
-              fi
-            fi
+              echo "<a href='./$runID/' class='report-button'>Run ID: $runID</a>" >> gh-pages/$team/index.html
+            done
+
+            echo "</body></html>" >> gh-pages/$team/index.html
           done
-
-          echo "];
-
-                function generateReportButtons() {
-                  const reportButtonsContainer = document.getElementById('report-buttons');
-                  reportFolders.forEach((entry) => {
-                    const button = document.createElement('a');
-                    button.href = './' + entry.team + '/' + entry.runID + '/';
-                    button.className = 'report-button';
-                    button.textContent = entry.team + ' - ' + entry.runID;
-                    reportButtonsContainer.appendChild(button);
-                  });
-                }
-
-                generateReportButtons();
-              </script>
-            </body>
-          </html>" >> gh-pages/index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
