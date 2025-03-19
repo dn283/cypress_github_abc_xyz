@@ -146,128 +146,128 @@ jobs:
 
       - name: Generate Team Report Page
         run: |
-            for team in abc xyz; do
-              echo "<!DOCTYPE html>
-              <html>
-              <head>
-                <title>${team^^} Test Reports</title>
-                <style>
-                  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-                  body {
-                    font-family: 'Poppins', sans-serif;
-                    background-color: #f4f4f9;
-                    text-align: center;
-                    margin: 0;
-                    padding: 0;
-                  }
-                  h1 {
-                    font-size: 36px;
-                    font-weight: 600;
-                    color: #222;
-                    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-                    background: linear-gradient(45deg, #17a2b8, #007bff);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    margin-top: 20px;
-                  }
-                  h2 {
-                    font-size: 20px;
-                    color: #555;
-                    font-weight: 400;
-                    opacity: 0.8;
-                  }
-                  .container {
-                    max-width: 800px;
-                    margin: 40px auto;
-                    padding: 20px;
-                  }
-                  .reports {
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                    gap: 20px;
-                  }
-                  .report-card {
-                    width: 280px;
-                    height: 100px;
-                    background: white;
-                    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-                    border-radius: 8px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 16px;
-                    font-weight: bold;
-                    transition: 0.3s;
-                    text-decoration: none;
-                    color: white;
-                    background-color: #28a745;
-                    border-left: 5px solid #155724;
-                    padding: 10px;
-                  }
-                  .report-card:hover {
-                    transform: scale(1.05);
-                    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
-                    background-color: #218838;
-                  }
-                  .timestamp {
-                    font-size: 14px;
-                    color: #666;
-                    margin-top: 4px;
-                  }
-                  .back-btn {
-                    display: inline-block;
-                    margin-top: 20px;
-                    padding: 10px 20px;
-                    font-size: 14px;
-                    text-decoration: none;
-                    color: white;
-                    background: #007bff;
-                    border-radius: 5px;
-                    transition: 0.3s;
-                  }
-                  .back-btn:hover { background: #0056b3; }
-                </style>
-              </head>
-              <body>
-                <div class='container'>
-                  <h1>🦸 ${team^^} Test Reports</h1>
-                  <h2>Select a test run to view the report:</h2>
-                  <div class='reports'>" > gh-pages/${team}/index.html
+          for team in abc xyz; do
+            echo "<!DOCTYPE html>
+            <html>
+            <head>
+              <title>${team^^} Test Reports</title>
+              <style>
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+                body {
+                  font-family: 'Poppins', sans-serif;
+                  background-color: #f4f4f9;
+                  text-align: center;
+                  margin: 0;
+                  padding: 0;
+                }
+                h1 {
+                  font-size: 36px;
+                  font-weight: 600;
+                  color: #222;
+                  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+                  background: linear-gradient(45deg, #17a2b8, #007bff);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  margin-top: 20px;
+                }
+                h2 {
+                  font-size: 20px;
+                  color: #555;
+                  font-weight: 400;
+                  opacity: 0.8;
+                }
+                .container {
+                  max-width: 800px;
+                  margin: 40px auto;
+                  padding: 20px;
+                }
+                .reports {
+                  display: flex;
+                  flex-wrap: wrap;
+                  justify-content: center;
+                  gap: 20px;
+                }
+                .report-card {
+                  width: 280px;
+                  height: 100px;
+                  background: white;
+                  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                  border-radius: 8px;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 16px;
+                  font-weight: bold;
+                  transition: 0.3s;
+                  text-decoration: none;
+                  color: white;
+                  background-color: #28a745;
+                  border-left: 5px solid #155724;
+                  padding: 10px;
+                }
+                .report-card:hover {
+                  transform: scale(1.05);
+                  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+                  background-color: #218838;
+                }
+                .timestamp {
+                  font-size: 14px;
+                  color: #666;
+                  margin-top: 4px;
+                }
+                .back-btn {
+                  display: inline-block;
+                  margin-top: 20px;
+                  padding: 10px 20px;
+                  font-size: 14px;
+                  text-decoration: none;
+                  color: white;
+                  background: #007bff;
+                  border-radius: 5px;
+                  transition: 0.3s;
+                }
+                .back-btn:hover { background: #0056b3; }
+              </style>
+            </head>
+            <body>
+              <div class='container'>
+                <h1>🦸 ${team^^} Test Reports</h1>
+                <h2>Select a test run to view the report:</h2>
+                <div class='reports'>" > gh-pages/${team}/index.html
 
-            for dir in $(ls -d gh-pages/${team}/*/ | sort -r); do
-              runID=$(basename "$dir")
-              
-              # Extract the date and time parts from the runID (e.g., 20250319-023733)
-              year=${runID:0:4}
-              month=${runID:4:2}
-              day=${runID:6:2}
-              hour=${runID:9:2}
-              minute=${runID:11:2}
-              second=${runID:13:2}
-              
-              # Construct the datetime string in a format that date can parse
-              datetime="${year}-${month}-${day} ${hour}:${minute}:${second}"
+          for dir in $(ls -d gh-pages/${team}/*/ | sort -r); do
+            runID=$(basename "$dir")
+            
+            # Extract the date and time parts from the runID (e.g., 20250319-023733)
+            year=${runID:0:4}
+            month=${runID:4:2}
+            day=${runID:6:2}
+            hour=${runID:9:2}
+            minute=${runID:11:2}
+            second=${runID:13:2}
+            
+                  # Construct the datetime string in a format that date can parse
+          datetime="${year}-${month}-${day} ${hour}:${minute}:${second}"
 
-              # Convert runID datetime to UTC, EST, and IST
-              UTC_TIME=$(date -u -d "$datetime" +'%H:%M:%S UTC')
-              EST_TIME=$(TZ="America/New_York" date -d "$datetime" +'%I:%M %p EST')
-              IST_TIME=$(TZ="Asia/Kolkata" date -d "$datetime" +'%I:%M %p IST')
+          # Convert runID datetime to UTC, EST, and IST
+          UTC_TIME=$(date -u -d "$datetime" +'%H:%M:%S UTC')
+          EST_TIME=$(TZ="America/New_York" date -d "$datetime" +'%I:%M %p EST')
+          IST_TIME=$(TZ="Asia/Kolkata" date -d "$datetime" +'%I:%M %p IST')
 
-              # Adding report link for each runID
-              echo "<a href='./$runID/' class='report-card'>
-                      📝 Run ID: $runID
-                      <div class='timestamp'>$year-$month-$day | $EST_TIME | $IST_TIME</div>
-                    </a>" >> gh-pages/${team}/index.html
-            done
+          # Adding report link for each runID
+          echo "<a href='./$runID/' class='report-card'>
+                  📝 Run ID: $runID
+                  <div class='timestamp'>$readableDate | $env.estTime | $env.istTime</div>
+                </a>" >> gh-pages/${team}/index.html
+          done
 
-            echo "</div>
-                  <a href='../' class='back-btn'>⬅️ Back to Teams</a>
-                </div>
-              </body>
-              </html>" >> gh-pages/${team}/index.html
-            done
+          echo "</div>
+                <a href='../' class='back-btn'>⬅️ Back to Teams</a>
+              </div>
+            </body>
+            </html>" >> gh-pages/${team}/index.html
+          done
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
